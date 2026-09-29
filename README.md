@@ -2,6 +2,7 @@
 
 [![在线报告](https://img.shields.io/badge/在线报告-GitHub%20Pages-ff2442)](https://colbert33789.github.io/travel/)
 [![Python](https://img.shields.io/badge/Python-3.9+-3776ab)](https://www.python.org/)
+[![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 [![测试](https://img.shields.io/badge/测试-35%20passed-1aa260)](tests/)
 
 预测 2026 国庆（10/1–10/7）深圳**什么时候出城最堵、哪条高速最难走、哪个景点人最多、去哪儿最值得**，
@@ -141,3 +142,8 @@ scripts/    run_pipeline.py · refresh_live.py · itinerary.py
 
 - [`docs/METHODOLOGY.md`](docs/METHODOLOGY.md) —— 模型、公式、假设与局限
 - [`docs/API_ACCESS.md`](docs/API_ACCESS.md) —— 各数据源申请门槛与实测结论
+
+## 许可
+
+代码为 **MIT** 许可。注意：第三方数据（百度慧眼/百度地图、高德、腾讯位置服务、12306、国家统计局）
+归各自权利方所有，受其平台条款与配额约束，**不在本许可范围内**——详见 [`LICENSE`](LICENSE) 末尾说明。

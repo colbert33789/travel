@@ -1,0 +1,32 @@
+MIT License
+
+Copyright (c) 2026 colbertli
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+第三方数据的使用受各自平台条款约束，本许可不涉及：
+
+- 百度慧眼迁徙、百度地图 Place、高德开放平台、腾讯位置服务、12306 的返回数据，
+  以及国家统计局人口普查数据，均归各自权利方所有，须遵守其服务条款与配额限制。
+- 仓库内置的 `src/holiday_traffic/reference/baidu_snapshot.json` 为百度慧眼公开
+  数据的快照，仅用于离线兜底与复现，不得用于商业分发。
+- 社媒（小红书/抖音/微信）与 OTA（携程/去哪儿/美团/飞猪）相关字段为模拟/先验值，
+  不代表真实平台数据。
