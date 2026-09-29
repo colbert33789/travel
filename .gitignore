@@ -23,3 +23,6 @@ data/partner_observations.csv
 .vscode/
 .DS_Store
 *.log
+
+# 报告发布用的临时 worktree
+.gh-pages-tmp/
