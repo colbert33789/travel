@@ -1,0 +1,9 @@
+numpy>=1.24
+pandas>=2.0
+lightgbm>=4.0
+PyYAML>=6.0
+plotly>=5.18
+fastapi>=0.110
+uvicorn>=0.29
+pytest>=7.0
+tzdata>=2023.3      # zoneinfo 时区库; Linux/macOS 自带, Windows 需此包

@@ -1,0 +1,50 @@
+# ============================================================
+# 深圳国庆假期出行预测系统配置
+# ============================================================
+
+project:
+  name: shenzhen-holiday-mobility
+  origin_city: 深圳
+  origin_adcode: "440300"     # 百度迁徙/行政区划代码
+  origin_population: 1756.0   # 万人, 七普深圳常住人口
+
+holiday:
+  start: "2026-10-01"
+  end: "2026-10-07"
+  timezone: "Asia/Shanghai"
+
+data:
+  mode: auto                  # auto: 联网拉取实时数据 | offline: 仅用内置快照(测试/CI)
+  cache_dir: data/cache
+  partner_observations_file: data/partner_observations.csv  # 可选：有授权的平台导出；不参与预测
+  history_start_year: 2021    # TTI 仿真训练样本起始年
+  random_seed: 42
+
+migration:
+  # 百度迁徙规模指数 -> 人次的换算系数(万人次/指数点).
+  # 校准假设: 使假期首日深圳超额迁出与公开报道量级(约 120-180 万人次)一致;
+  # 有深圳交通局官方"出深人次"口径后应重新标定.
+  people_per_index: 4.5
+
+amap:
+  # 高德 Web 服务 Key(道路路况)。建议改用环境变量 AMAP_KEY 避免密钥入库;
+  # 环境变量存在时优先于此处。
+  key: null
+
+models:
+  lightgbm:
+    n_estimators: 400
+    learning_rate: 0.05
+    num_leaves: 63
+    min_child_samples: 20
+    subsample: 0.9
+    colsample_bytree: 0.9
+
+# 实时引擎: 每轮拉取最新数据 -> 重新推理 -> 重写产出物与报告
+engine:
+  enabled: false              # true = API 启动时挂后台刷新任务
+  interval_minutes: 30
+
+output:
+  artifacts_dir: artifacts
+  report_html: artifacts/report.html

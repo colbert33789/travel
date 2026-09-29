@@ -1,0 +1,210 @@
+:root {
+  --bg: #f5f6f8; --card: #fff; --ink: #1d2733; --muted: #7b8794; --line: #e8ebef;
+  --brand: #ff2442; --brand-soft: #fff0f2;
+  --green: #1aa260; --amber: #f5a623; --orange: #ff7043; --red: #e53935; --gray: #9aa4ae;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+  background: var(--bg); color: var(--ink); line-height: 1.65; font-size: 15px;
+}
+b, strong { font-weight: 650; }
+.sub { color: var(--muted); font-size: 12.5px; }
+
+/* ---------- Hero ---------- */
+.hero {
+  background: linear-gradient(135deg, #ff2442 0%, #ff5f3a 55%, #ff9a3c 100%);
+  color: #fff; padding: 30px 20px 26px; border-radius: 0 0 24px 24px;
+}
+.hero-inner { max-width: 920px; margin: 0 auto; }
+.hero h1 { font-size: 26px; line-height: 1.35; font-weight: 800; letter-spacing: .5px; }
+.hero .lead { margin-top: 6px; font-size: 14px; opacity: .92; }
+.badges { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.badge {
+  background: rgba(255,255,255,.18); border: 1px solid rgba(255,255,255,.35);
+  border-radius: 999px; padding: 2px 11px; font-size: 12px; white-space: nowrap;
+}
+.tldr {
+  margin-top: 16px; background: rgba(255,255,255,.96); color: var(--ink);
+  border-radius: 16px; padding: 14px 16px; box-shadow: 0 8px 24px rgba(0,0,0,.12);
+}
+.tldr h2 { font-size: 15px; color: var(--brand); margin-bottom: 6px; }
+.tldr li { list-style: none; font-size: 14.5px; padding: 5px 0; border-bottom: 1px dashed var(--line); }
+.tldr li:last-child { border-bottom: none; }
+
+/* ---------- 导航 ---------- */
+.nav {
+  position: sticky; top: 0; z-index: 10; background: rgba(245,246,248,.94);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  padding: 8px 12px; overflow-x: auto; white-space: nowrap; border-bottom: 1px solid var(--line);
+  scrollbar-width: none;
+}
+.nav::-webkit-scrollbar { display: none; }
+.nav a {
+  display: inline-block; margin-right: 6px; padding: 4px 12px; border-radius: 999px;
+  background: #fff; border: 1px solid var(--line); color: var(--ink);
+  font-size: 13px; text-decoration: none;
+}
+
+/* ---------- 布局 ---------- */
+.wrap { max-width: 920px; margin: 0 auto; padding: 4px 12px 40px; }
+section.card {
+  background: var(--card); border-radius: 16px; padding: 18px 16px; margin-top: 14px;
+  box-shadow: 0 1px 8px rgba(29,39,51,.05); scroll-margin-top: 56px;
+}
+.card h2 { font-size: 18px; font-weight: 750; margin-bottom: 4px; }
+.card h3 { font-size: 15px; margin: 16px 0 8px; }
+.card .how { font-size: 13px; color: var(--muted); margin-bottom: 10px; }
+.card .how b { color: var(--ink); }
+.chart { margin: 4px -6px 0; }
+
+/* ---------- 方法 ---------- */
+.steps { counter-reset: s; margin-top: 8px; }
+.steps li {
+  list-style: none; position: relative; padding: 8px 0 8px 38px; font-size: 14.5px;
+  border-bottom: 1px dashed var(--line);
+}
+.steps li:last-child { border-bottom: none; }
+.steps li::before {
+  counter-increment: s; content: counter(s); position: absolute; left: 0; top: 9px;
+  width: 26px; height: 26px; border-radius: 50%; background: var(--brand); color: #fff;
+  font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: center;
+}
+.acc { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 10px 0 6px; }
+.acc div {
+  background: #f7f8fa; border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px;
+}
+.acc .v { font-size: 22px; font-weight: 800; color: var(--brand); line-height: 1.2; }
+.acc .l { font-size: 12px; color: var(--muted); }
+.note {
+  background: #fff8e6; border: 1px solid #ffe1a3; border-radius: 10px;
+  padding: 9px 12px; font-size: 12.5px; color: #8a5a00; margin-top: 8px;
+}
+details { margin-top: 12px; border: 1px solid var(--line); border-radius: 12px; background: #fafbfc; }
+details > summary {
+  cursor: pointer; padding: 10px 14px; font-size: 14px; font-weight: 650; list-style: none;
+}
+details > summary::-webkit-details-marker { display: none; }
+details > summary::after { content: " ▾"; color: var(--muted); }
+details[open] > summary::after { content: " ▴"; }
+details .inner { padding: 0 14px 14px; font-size: 13.5px; }
+.formula {
+  background: #1f2a37; color: #e8edf2; border-radius: 10px; padding: 10px 12px;
+  font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 12px; line-height: 1.9;
+  overflow-x: auto; white-space: nowrap; margin: 8px 0;
+}
+.formula b { color: #ffd166; font-weight: 600; }
+
+/* ---------- 亮点卡 ---------- */
+.hl-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 10px; }
+.hl { border-radius: 14px; padding: 14px; color: #fff; }
+.hl h3 { margin: 0 0 6px; font-size: 15px; }
+.hl li { list-style: none; padding: 6px 0; border-bottom: 1px dashed rgba(255,255,255,.3); font-size: 14px; }
+.hl li:last-child { border-bottom: none; }
+.hl li .sub { color: rgba(255,255,255,.85); display: block; font-size: 12px; }
+.hl-red { background: linear-gradient(135deg, #e53935, #ff7043); }
+.hl-orange { background: linear-gradient(135deg, #ef6c00, #ffa726); }
+.hl-green { background: linear-gradient(135deg, #00897b, #43a047); }
+
+/* ---------- 天气条 / 时刻表 ---------- */
+.days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-top: 8px; }
+.day {
+  text-align: center; background: #f7f8fa; border: 1px solid var(--line);
+  border-radius: 10px; padding: 6px 2px;
+}
+.day.rain { background: #eef5ff; border-color: #cfe2ff; }
+.day .d { font-size: 12px; font-weight: 650; }
+.day .i { font-size: 22px; line-height: 1.4; }
+.day .p { font-size: 11px; color: var(--muted); }
+.tt { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 6px;
+  display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.tt thead, .tt tbody { display: table; width: 100%; min-width: 340px; }
+.tt th { text-align: left; font-size: 12px; color: var(--muted); font-weight: 600; padding: 6px 4px; }
+.tt td { padding: 7px 4px; border-top: 1px solid var(--line); vertical-align: middle; }
+.pill {
+  display: inline-block; border-radius: 999px; padding: 1px 9px; font-size: 12px; white-space: nowrap;
+}
+.pill.go { background: #e8f7ef; color: var(--green); }
+.pill.stop { background: #fdecea; color: var(--red); }
+
+/* ---------- 推荐卡 ---------- */
+.daytip {
+  font-size: 12.5px; color: #4a5561; background: #f7f8fa; border: 1px solid var(--line);
+  border-radius: 10px; padding: 6px 10px; margin: -2px 0 2px; line-height: 1.5;
+}
+/* 「哪里人最多」下方的分等级目的地清单 */
+.gl { font-size: 12.5px; color: #4a5561; line-height: 1.6; }
+.gl b { color: var(--ink); }
+.rec { display: flex; gap: 10px; padding: 11px 0; border-bottom: 1px solid var(--line); }
+.rec:last-child { border-bottom: none; }
+.rec .rk {
+  flex: 0 0 28px; height: 28px; border-radius: 8px; background: #f1f3f5; color: var(--muted);
+  font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: 14px;
+}
+.rec:first-child .rk { background: var(--brand); color: #fff; }
+.rec .body { flex: 1; min-width: 0; }
+.rec .name { font-size: 15.5px; font-weight: 700; }
+.rec .meta { font-size: 12.5px; color: var(--muted); }
+.rec .tags { margin-top: 4px; display: flex; flex-wrap: wrap; gap: 4px; }
+.tag {
+  display: inline-block; font-size: 11.5px; padding: 1px 8px; border-radius: 999px;
+  background: #f1f3f5; color: #4a5561; white-space: nowrap;
+}
+.rec .why { font-size: 12.5px; color: #4a5561; margin-top: 3px; }
+.score { font-size: 18px; font-weight: 800; color: var(--brand); flex: 0 0 auto; }
+
+/* ---------- 数据来源 ---------- */
+.src { width: 100%; border-collapse: collapse; font-size: 13px;
+  display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.src tbody { display: table; width: 100%; min-width: 380px; }
+.src td { padding: 8px 4px; border-top: 1px solid var(--line); vertical-align: top; }
+.st { display: inline-block; font-size: 11.5px; padding: 1px 8px; border-radius: 999px; white-space: nowrap; }
+.st.live { background: #e8f7ef; color: var(--green); }
+.st.snap { background: #fff4e0; color: #b26a00; }
+.st.prior { background: #f1f3f5; color: #5f6b77; }
+.st.off { background: #fdecea; color: var(--red); }
+.foot { text-align: center; color: var(--muted); font-size: 12px; margin-top: 18px; line-height: 1.8; }
+
+/* ---------- 窄屏 ---------- */
+@media (max-width: 380px) {
+  body { font-size: 14px; }
+  .hero h1 { font-size: 22px; }
+  .day .i { font-size: 18px; }
+  .day .d { font-size: 11px; }
+  .day .p { font-size: 10px; }
+  section.card { padding: 14px 12px; }
+}
+
+/* ---------- 宽屏 ---------- */
+@media (min-width: 720px) {
+  .hero { padding: 40px 24px 32px; }
+  .hero h1 { font-size: 32px; }
+  .hl-grid { grid-template-columns: repeat(3, 1fr); }
+  .acc { grid-template-columns: repeat(4, 1fr); }
+  section.card { padding: 22px 24px; }
+}
+/* ---------- iPhone 安全区 ---------- */
+/* 页面用了 viewport-fit=cover(内容延伸到刘海区), 必须配套 safe-area inset:
+   否则横屏时左右被刘海遮挡、竖屏时底部内容被 Home 指示条压住。 */
+@supports (padding: max(0px, env(safe-area-inset-left))) {
+  .hero { padding-left: max(20px, env(safe-area-inset-left));
+          padding-right: max(20px, env(safe-area-inset-right)); }
+  .nav, .wrap { padding-left: max(12px, env(safe-area-inset-left));
+                padding-right: max(12px, env(safe-area-inset-right)); }
+  .wrap { padding-bottom: calc(40px + env(safe-area-inset-bottom)); }
+}
+
+/* ---------- 横向滑动提示 ---------- */
+/* 时刻表 / 数据来源表 / 导航在手机上需左右滑动才能看全; 右侧渐变提示"还有内容",
+   否则用户不知道能滑, 会漏看右侧的「状态」列和后面的导航项。
+   仅对运行时检测为真正可滚动的元素生效(见报告末尾脚本), 不滚动时不加遮罩。 */
+.scrollable {
+  -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 26px), rgba(0, 0, 0, .35));
+  mask-image: linear-gradient(90deg, #000 calc(100% - 26px), rgba(0, 0, 0, .35));
+}
+@media print {
+  .nav { display: none; }
+  section.card { box-shadow: none; border: 1px solid var(--line); break-inside: avoid; }
+  .scrollable { -webkit-mask-image: none; mask-image: none; }
+}
