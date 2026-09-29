@@ -159,6 +159,25 @@ def _chart(fig: go.Figure) -> str:
 
 # ======================= 分块 =======================
 
+def _mig_badge(provenance: dict) -> str:
+    """顶部徽章随数据真实状态变化 —— 降级到快照时不能还写着「真实数据」."""
+    st = (provenance.get("百度慧眼迁徙") or {}).get("status", "")
+    if st.startswith(("live", "cache")):
+        return "百度迁徙真实数据"
+    if st.startswith("snapshot"):
+        return "迁徙=内置真实快照"
+    return "迁徙数据已降级"
+
+
+def _wx_badge(provenance: dict) -> str:
+    st = (provenance.get("Open-Meteo 天气") or {}).get("status", "")
+    if st.startswith(("live", "cache")):
+        return "逐日天气预报"
+    if "气候均值" in st:
+        return "天气=气候均值兜底"
+    return "天气数据已降级"
+
+
 def _tldr(res: dict) -> str:
     mig, traffic, rec, crowd = res["migration"], res["traffic"], res["recommendations"], res["crowding"]
     hol = mig[mig["out_index"].notna()]
@@ -193,7 +212,7 @@ def _tldr(res: dict) -> str:
         f"👥 <b>人最多：</b>{_e(hot_names)}",
         f"💎 <b>{TRIP_DAYS} 天行程最值得去：</b>"
         f"{_e('、'.join(short_name(t) for t in top_rec))}"
-        f"（{_md(span[0])}–{_md(span[1])} 出发 · 省内）",
+        f"（{_md(span[0])}–{_md((dt.date.fromisoformat(span[-1]) - dt.timedelta(days=TRIP_DAYS - 1)).isoformat())} 出发 · 省内）",
         (f"🌧 <b>{_md(driest)} 最干爽、{_md(wettest)} 雨最广</b>"
          f"（{wet[wettest]}/{len(w[w.date == wettest])} 地点有雨）："
          f"户外排在 {_md(driest)}，{_md(wettest)} 安排室内或雨景")
@@ -629,7 +648,7 @@ def _method(res: dict) -> str:
 <ol class="steps">
 <li><b>出行节奏</b>：抓取百度慧眼深圳每日迁出/迁入真实指数，以 9 月上中旬为「平日」，
 套用 2024、2025 国庆的节奏曲线；假期开始后用已公布的真实数据逐日修正。</li>
-<li><b>去哪儿</b>：深圳人假期去向城市占比直接来自百度真实排名；{len(TOWNS)} 个目的地所在 {len(CITY_ADCODE)} 个城市的全来源迁入曲线，
+<li><b>去哪儿</b>：深圳人假期去向城市占比直接来自百度真实排名；{len(TOWNS)} 个目的地分布于 {len(CITY_ADCODE)} 个城市，用各城市全来源迁入曲线
 推算每天在当地的游客数，再按酒店接待能力、景点吸引力、社媒/OTA 热度分到城镇。</li>
 <li><b>挤不挤</b>：游客数 ÷ 当地酒店民宿可接待人数；超过 100% 即「订房难、排长队」。</li>
 <li><b>堵不堵</b>：LightGBM 分位数模型，输入当天出行/返程流量、小时节律、天气预报、线路热度，
@@ -650,7 +669,7 @@ def _method(res: dict) -> str:
 <div class="formula">
 平日基线 = 9/1-9/20 均值 = 迁出 <b>{prof.baseline_out:.2f}</b> / 迁入 <b>{prof.baseline_in:.2f}</b><br>
 逐日指数 = 平日基线 × 参考年(<b>{'、'.join(map(str, prof.ref_years))}</b>)节奏倍数<br>
-在地游客 V(t) = V(t−1)·(1 − 1/2.5天) + 超额到达(t)·(1 − t/(n+1))<br>
+在地游客 V(t) = V(t−1)·(1 − 1/2.5天) + 超额到达(t)，其中 超额到达(t) = (迁入指数(t) − 平日基线)·(1 − t/(n+1))<br>
 人次换算 = 指数 × <b>{m.get('migration_profile', {}).get('people_per_index', '-')}</b> 万人次/点<br>
 拥挤度 = 在地游客 ÷ (客房 × 2.8人/间 × 1.6)<br>
 城内分配 ∝ 接待能力 × 吸引力 × 社媒<b>^0.6</b> × OTA<b>^0.8</b>
@@ -718,7 +737,7 @@ def build_report(res: dict, out_path: str | Path) -> str:
 <h1>🚗 深圳国庆出行预测</h1>
 <p class="lead">{_mdw(dates[0])} – {_mdw(dates[-1])} · 周边 {len(TOWNS)} 个目的地 × {len(HIGHWAYS)} 条出城高速</p>
 <div class="badges"><span class="badge">更新于 {_e(gen[:16])}</span>
-<span class="badge">百度迁徙真实数据</span><span class="badge">实时天气预报</span></div>
+<span class="badge">{_mig_badge(res["metrics"].get("provenance", {}))}</span><span class="badge">{_wx_badge(res["metrics"].get("provenance", {}))}</span></div>
 {_tldr(res)}</div></header>
 <nav class="nav">{nav}</nav>
 <main class="wrap">{body}
