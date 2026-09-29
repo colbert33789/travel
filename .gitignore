@@ -1,9 +1,25 @@
+# ---- Python ----
 __pycache__/
 *.pyc
-.venv/
-.pytest_cache/
 *.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ---- 环境 ----
+.venv/
+venv/
+
+# ---- 密钥(务必不要提交; 用 .env 或环境变量) ----
+.env
+
+# ---- 运行产出(由 pipeline 生成, 不入库) ----
+artifacts/
 data/cache/
 data/partner_observations.csv
-artifacts/
-.env
+
+# ---- 编辑器 / 系统 ----
+.idea/
+.vscode/
+.DS_Store
+*.log
