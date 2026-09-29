@@ -146,4 +146,5 @@ scripts/    run_pipeline.py · refresh_live.py · itinerary.py
 ## 许可
 
 代码为 **MIT** 许可。注意：第三方数据（百度慧眼/百度地图、高德、腾讯位置服务、12306、国家统计局）
-归各自权利方所有，受其平台条款与配额约束，**不在本许可范围内**——详见 [`LICENSE`](LICENSE) 末尾说明。
+归各自权利方所有，受其平台条款与配额约束，**不在本许可范围内**——详见
+[`docs/DATA_TERMS.md`](docs/DATA_TERMS.md)。
