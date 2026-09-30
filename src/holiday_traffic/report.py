@@ -107,8 +107,9 @@ WEEK = "一二三四五六日"
 FONT = dict(family="-apple-system, PingFang SC, Microsoft YaHei, sans-serif", size=12,
             color="#1d2733")
 CONFIG = {"displayModeBar": False, "responsive": True, "scrollZoom": False}
-LEVEL_COLOR = {"舒畅": "#1aa260", "正常": "#8bc34a", "较拥挤": "#f5a623",
-               "拥挤": "#ff7043", "严重拥挤": "#e53935"}
+# 拥挤等级配色: 绿→黄绿→琥珀→橙→红, 相邻档区分度最大化(原 黄#f5a623/橙#ff7043 太接近)
+LEVEL_COLOR = {"舒畅": "#16a34a", "正常": "#84cc16", "较拥挤": "#f59e0b",
+               "拥挤": "#f97316", "严重拥挤": "#dc2626"}
 STATUS_CLASS = {"live": "live", "cache": "live", "stale": "snap", "static": "prior",
                 "prior": "prior", "simulated": "prior", "not_configured": "off",
                 "offline": "snap", "partial": "snap", "user_supplied": "prior",
@@ -273,16 +274,18 @@ def _rhythm(res: dict) -> str:
     bx = [_md(d) for d in band["date"]]
     fig.add_trace(go.Scatter(x=bx + bx[::-1],
                              y=list(band["out_high"]) + list(band["out_low"])[::-1],
+                             mode="lines",   # <20 个点时 plotly 默认 lines+markers, 会冒出杂色顶点
                              fill="toself", fillcolor="rgba(255,36,66,.12)", line=dict(width=0),
                              hoverinfo="skip", showlegend=False))
     fig.add_trace(go.Scatter(x=bx, y=band["out_index"], name="离开深圳",
                              mode="lines+markers", line=dict(color="#ff2442", width=3),
                              hovertemplate="%{y:.1f}"))
     fig.add_trace(go.Scatter(x=x + x[::-1], y=list(inx["in_high"]) + list(inx["in_low"])[::-1],
-                             fill="toself", fillcolor="rgba(41,128,185,.12)", line=dict(width=0),
+                             mode="lines",   # 同上, 防止默认 markers
+                             fill="toself", fillcolor="rgba(47,128,237,.12)", line=dict(width=0),
                              hoverinfo="skip", showlegend=False))
     fig.add_trace(go.Scatter(x=x, y=inx["in_index"], name="回到深圳", mode="lines+markers",
-                             line=dict(color="#2980b9", width=3), hovertemplate="%{y:.1f}"))
+                             line=dict(color="#2f80ed", width=3), hovertemplate="%{y:.1f}"))
     base = res["profile"].baseline_out
     fig.add_hline(y=base, line_dash="dot", line_color="#9aa4ae",
                   annotation_text="平日水平", annotation_position="top left")
@@ -326,10 +329,12 @@ def _railway(res: dict) -> str:
     cities = sorted(mean_rate, key=lambda c: -mean_rate[c])
     z = [[daily[d].get(c, {}).get("rate", None) and daily[d][c]["rate"] * 100
           for d in dates] for c in cities]
+    text = [[f"{v:.0f}" if v is not None else "" for v in row] for row in z]
     fig = go.Figure(go.Heatmap(
         z=z, x=[_md(d) for d in dates], y=cities, xgap=1, ygap=1,
-        colorscale=[[0, "#1aa260"], [0.35, "#fbc02d"], [0.6, "#f57c00"],
-                    [0.85, "#e53935"], [1, "#7f0000"]],
+        text=text, texttemplate="%{text}", textfont=dict(size=10, color="#fff"),
+        colorscale=[[0, "#2fa94f"], [0.35, "#fbc02d"], [0.6, "#f57c00"],
+                    [0.85, "#e53935"], [1, "#a61e1e"]],
         zmin=0, zmax=100, colorbar=dict(thickness=10, len=0.8, outlinewidth=0,
                                         ticksuffix="%", tickfont=dict(size=10)),
         hovertemplate="%{y} · %{x} 售罄率 %{z:.0f}%<extra></extra>"))
